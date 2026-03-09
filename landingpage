@@ -1,0 +1,772 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Allianz Shield Plus — FINNO Malaysia</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #003781;
+    --teal: #006A86;
+    --sky: #00B4D8;
+    --gold: #E8A020;
+    --light: #F4F8FC;
+    --white: #ffffff;
+    --dark: #0D1B2A;
+    --muted: #5A6A7A;
+    --border: #D8E6F0;
+    --green: #1A8C5B;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'Montserrat', sans-serif; background: var(--white); color: var(--dark); overflow-x: hidden; }
+  h1,h2,h3,h4,h5 { font-family: 'Montserrat', sans-serif; }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 18px 48px;
+    background: rgba(255,255,255,0.95);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-logo { font-family: 'Montserrat', sans-serif; font-weight: 800; font-size: 1.5rem; color: var(--navy); text-decoration: none; }
+  .nav-logo span { color: var(--sky); }
+  .nav-cta { background: var(--navy); color: white; padding: 10px 24px; border-radius: 50px; font-size: 0.875rem; font-weight: 500; text-decoration: none; transition: background 0.2s; }
+  .nav-cta:hover { background: var(--teal); }
+
+  /* HERO */
+  .hero {
+    margin-top: 73px;
+    background: linear-gradient(135deg, #003781 0%, #006A86 50%, #00B4D8 100%);
+    padding: 80px 48px 100px;
+    position: relative; overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute; top: -80px; right: -80px;
+    width: 500px; height: 500px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.05);
+  }
+  .hero::after {
+    content: '';
+    position: absolute; bottom: -100px; left: 30%;
+    width: 350px; height: 350px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.04);
+  }
+  .hero-inner { max-width: 1100px; margin: 0 auto; position: relative; z-index: 2; }
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.3);
+    color: white; padding: 6px 16px; border-radius: 50px;
+    font-size: 0.8rem; font-weight: 500; letter-spacing: 0.05em; text-transform: uppercase;
+    margin-bottom: 24px;
+  }
+  .hero-badge::before { content: '🛡️'; }
+  .hero h1 { font-size: clamp(2.4rem, 5vw, 4rem); color: white; line-height: 1.1; margin-bottom: 20px; font-weight: 800; }
+  .hero h1 em { font-style: normal; color: #7FDFF5; }
+  .hero p { font-size: 1.1rem; color: rgba(255,255,255,0.85); max-width: 560px; line-height: 1.7; margin-bottom: 36px; font-weight: 300; }
+  .hero-stats { display: flex; gap: 40px; flex-wrap: wrap; }
+  .hero-stat { border-left: 2px solid rgba(255,255,255,0.3); padding-left: 16px; }
+  .hero-stat .num { font-family: 'Montserrat', sans-serif; font-size: 1.6rem; font-weight: 700; color: white; }
+  .hero-stat .lbl { font-size: 0.78rem; color: rgba(255,255,255,0.65); margin-top: 2px; }
+  .hero-fineprint { margin-top: 36px; font-size: 0.72rem; color: rgba(255,255,255,0.5); font-style: italic; }
+  .hero-ctas { display: flex; gap: 14px; align-items: center; flex-wrap: wrap; margin-top: 36px; margin-bottom: 0; }
+  .hero-btn-primary {
+    display: inline-block; padding: 14px 32px; border-radius: 50px;
+    background: white; color: var(--navy);
+    font-family: 'Montserrat', sans-serif; font-size: 0.9rem; font-weight: 700;
+    text-decoration: none; transition: all 0.2s; letter-spacing: 0.01em;
+  }
+  .hero-btn-primary:hover { background: #E8F4FB; transform: translateY(-1px); box-shadow: 0 6px 20px rgba(0,0,0,0.15); }
+  .hero-btn-secondary {
+    display: inline-block; padding: 14px 28px; border-radius: 50px;
+    background: transparent; color: white; border: 1.5px solid rgba(255,255,255,0.5);
+    font-family: 'Montserrat', sans-serif; font-size: 0.9rem; font-weight: 600;
+    text-decoration: none; transition: all 0.2s;
+  }
+  .hero-btn-secondary:hover { border-color: white; background: rgba(255,255,255,0.1); }
+
+  /* BENEFITS STRIP */
+  .benefits-strip { background: var(--navy); padding: 28px 48px; }
+  .benefits-strip-inner { max-width: 1100px; margin: 0 auto; display: flex; gap: 40px; flex-wrap: wrap; justify-content: space-between; }
+  .benefit-item { display: flex; align-items: center; gap: 10px; color: rgba(255,255,255,0.85); font-size: 0.875rem; }
+  .benefit-item .icon { font-size: 1.2rem; }
+
+  /* SECTION LAYOUT */
+  .section { padding: 80px 48px; }
+  .section-inner { max-width: 1100px; margin: 0 auto; }
+  .section-tag { display: inline-block; background: #E8F4FB; color: var(--teal); font-size: 0.75rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; padding: 5px 14px; border-radius: 50px; margin-bottom: 14px; }
+  .section-title { font-size: clamp(1.7rem, 3vw, 2.5rem); font-weight: 800; color: var(--navy); margin-bottom: 12px; line-height: 1.2; }
+  .section-sub { font-size: 1rem; color: var(--muted); max-width: 580px; line-height: 1.7; }
+
+  /* PRICING CALCULATOR */
+  .pricing-section { background: var(--light); }
+  .calc-box {
+    background: white; border-radius: 20px; padding: 40px;
+    box-shadow: 0 4px 30px rgba(0,55,129,0.08);
+    border: 1px solid var(--border);
+    margin-top: 40px;
+  }
+  .calc-row { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 32px; }
+  @media(max-width:600px) { .calc-row { grid-template-columns: 1fr; } }
+  .form-group label { display: block; font-size: 0.875rem; font-weight: 600; color: var(--navy); margin-bottom: 8px; }
+  .form-group label .req { color: #e03; margin-left: 2px; }
+  .seg-control { display: flex; gap: 0; border: 2px solid var(--border); border-radius: 12px; overflow: hidden; }
+  .seg-btn {
+    flex: 1; padding: 12px 16px; border: none; background: white; cursor: pointer;
+    font-family: 'Montserrat', sans-serif; font-size: 0.875rem; font-weight: 500; color: var(--muted);
+    transition: all 0.2s; text-align: center;
+  }
+  .seg-btn.active { background: var(--navy); color: white; }
+  .seg-btn:first-child { border-radius: 10px 0 0 10px; }
+  .seg-btn:last-child { border-radius: 0 10px 10px 0; }
+
+  /* Tooltip */
+  .tooltip-wrap { position: relative; display: inline-flex; align-items: center; gap: 6px; }
+  .tooltip-icon { width: 16px; height: 16px; border-radius: 50%; background: var(--teal); color: white; font-size: 10px; font-weight: 700; display: inline-flex; align-items: center; justify-content: center; cursor: pointer; flex-shrink: 0; }
+  .tooltip-box {
+    display: none; position: absolute; left: 24px; top: -6px; z-index: 50;
+    background: var(--dark); color: white; font-size: 0.78rem; line-height: 1.5;
+    padding: 10px 14px; border-radius: 10px; width: 240px; pointer-events: none;
+  }
+  .tooltip-wrap:hover .tooltip-box { display: block; }
+
+  /* PLAN CARDS */
+  .plans-scroll-wrap { margin-top: 24px; }
+  .plans-scroll {
+    display: flex; gap: 16px;
+    overflow-x: auto; padding-bottom: 16px; padding-top: 4px;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+  }
+  .plans-scroll::-webkit-scrollbar { height: 6px; }
+  .plans-scroll::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+  .plan-card {
+    flex-shrink: 0; width: 240px;
+    border: 2px solid var(--border); border-radius: 16px; padding: 24px 20px;
+    cursor: pointer; transition: all 0.2s; scroll-snap-align: start;
+    background: white; position: relative;
+  }
+  .plan-card:hover { border-color: var(--sky); box-shadow: 0 4px 20px rgba(0,180,216,0.15); }
+  .plan-card.selected { border-color: var(--navy); box-shadow: 0 4px 24px rgba(0,55,129,0.18); }
+  .plan-card .plan-name { font-family: 'Montserrat', sans-serif; font-size: 0.8rem; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 10px; }
+  .plan-card .plan-sum { font-family: 'Montserrat', sans-serif; font-size: 1.4rem; font-weight: 800; color: var(--navy); line-height: 1; }
+  .plan-card .plan-sum-label { font-size: 0.72rem; color: var(--muted); margin-top: 3px; margin-bottom: 14px; }
+  .plan-card .plan-detail { font-size: 0.78rem; color: var(--muted); display: flex; justify-content: space-between; margin-bottom: 6px; }
+  .plan-card .plan-detail strong { color: var(--dark); }
+  .plan-card .plan-price { margin-top: 16px; padding-top: 14px; border-top: 1px solid var(--border); }
+  .plan-card .plan-price .price { font-family: 'Montserrat', sans-serif; font-size: 1.5rem; font-weight: 800; color: var(--navy); }
+  .plan-card .plan-price .price-label { font-size: 0.72rem; color: var(--muted); }
+  .plan-card .selected-badge {
+    display: none; position: absolute; top: -10px; right: 12px;
+    background: var(--navy); color: white; font-size: 0.7rem; font-weight: 600;
+    padding: 3px 10px; border-radius: 50px;
+  }
+  .plan-card.selected .selected-badge { display: block; }
+  .plan-card .btn-view-full {
+    display: block; width: 100%; margin-top: 14px;
+    background: var(--light); color: var(--navy); border: 1px solid var(--border);
+    padding: 9px 0; border-radius: 9px; font-size: 0.8rem; font-weight: 600;
+    cursor: pointer; text-align: center; transition: all 0.2s; font-family: 'Montserrat', sans-serif;
+  }
+  .plan-card.selected .btn-view-full { background: var(--navy); color: white; border-color: var(--navy); }
+  .plan-card .btn-view-full:hover { background: var(--navy); color: white; border-color: var(--navy); }
+
+  /* MODAL */
+  .modal-overlay {
+    display: none; position: fixed; inset: 0; z-index: 200;
+    background: rgba(13,27,42,0.65); backdrop-filter: blur(4px);
+    align-items: flex-start; justify-content: center; padding: 40px 20px; overflow-y: auto;
+  }
+  .modal-overlay.open { display: flex; }
+  .modal {
+    background: white; border-radius: 20px; max-width: 720px; width: 100%;
+    padding: 40px; position: relative; margin: auto;
+  }
+  .modal-close {
+    position: absolute; top: 16px; right: 16px;
+    width: 36px; height: 36px; border-radius: 50%; border: 1px solid var(--border);
+    background: white; cursor: pointer; font-size: 1.1rem; display: flex; align-items: center; justify-content: center;
+    color: var(--muted); transition: all 0.2s;
+  }
+  .modal-close:hover { background: var(--dark); color: white; }
+  .modal h3 { font-size: 1.5rem; font-weight: 800; color: var(--navy); margin-bottom: 6px; }
+  .modal .modal-sub { font-size: 0.875rem; color: var(--muted); margin-bottom: 24px; }
+  .benefits-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 24px; }
+  @media(max-width:500px) { .benefits-grid { grid-template-columns: 1fr; } }
+  .benefit-row { display: flex; justify-content: space-between; align-items: center; padding: 10px 14px; background: var(--light); border-radius: 10px; font-size: 0.82rem; }
+  .benefit-row .b-label { color: var(--muted); }
+  .benefit-row .b-val { font-weight: 600; color: var(--navy); text-align: right; max-width: 140px; }
+  .modal-docs { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 28px; }
+  .doc-btn {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 9px 16px; border: 1.5px solid var(--border); border-radius: 9px;
+    font-size: 0.8rem; font-weight: 500; color: var(--teal); text-decoration: none;
+    transition: all 0.2s; cursor: pointer; background: white; font-family: 'Montserrat', sans-serif;
+  }
+  .doc-btn:hover { border-color: var(--teal); background: #EAF6FA; }
+  .btn-apply {
+    display: block; width: 100%; padding: 16px; border-radius: 12px;
+    background: var(--navy); color: white; font-family: 'Montserrat', sans-serif;
+    font-size: 1rem; font-weight: 700; border: none; cursor: pointer; transition: background 0.2s;
+  }
+  .btn-apply:hover { background: var(--teal); }
+
+  /* APPLICATION MODAL */
+  .app-modal .modal { max-width: 640px; }
+  .form-field { margin-bottom: 18px; }
+  .form-field label { display: block; font-size: 0.82rem; font-weight: 600; color: var(--navy); margin-bottom: 6px; }
+  .form-field input, .form-field select, .form-field textarea {
+    width: 100%; padding: 11px 14px; border: 1.5px solid var(--border); border-radius: 10px;
+    font-family: 'Montserrat', sans-serif; font-size: 0.9rem; color: var(--dark);
+    transition: border-color 0.2s; background: white;
+  }
+  .form-field input:focus, .form-field select:focus, .form-field textarea:focus { outline: none; border-color: var(--teal); }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  @media(max-width:500px) { .form-row { grid-template-columns: 1fr; } }
+  .nominee-block { background: var(--light); border-radius: 12px; padding: 18px; margin-bottom: 12px; position: relative; }
+  .nominee-block h5 { font-size: 0.85rem; font-weight: 700; color: var(--navy); margin-bottom: 14px; }
+  .btn-remove-nominee { position: absolute; top: 14px; right: 14px; background: none; border: none; color: var(--muted); cursor: pointer; font-size: 0.85rem; }
+  .btn-add-nominee {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: none; border: 1.5px dashed var(--teal); color: var(--teal);
+    padding: 9px 16px; border-radius: 9px; font-size: 0.85rem; font-weight: 600;
+    cursor: pointer; font-family: 'Montserrat', sans-serif; margin-bottom: 20px; transition: all 0.2s;
+  }
+  .btn-add-nominee:hover { background: #EAF6FA; }
+  .section-divider { border: none; border-top: 1px solid var(--border); margin: 20px 0; }
+  .form-section-title { font-family: 'Montserrat', sans-serif; font-size: 0.85rem; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 14px; margin-top: 4px; }
+  .btn-submit {
+    width: 100%; padding: 16px; border-radius: 12px;
+    background: linear-gradient(135deg, var(--navy), var(--teal));
+    color: white; font-family: 'Montserrat', sans-serif; font-size: 1rem; font-weight: 700;
+    border: none; cursor: pointer; transition: opacity 0.2s; margin-top: 8px;
+  }
+  .btn-submit:hover { opacity: 0.9; }
+  .selected-plan-info { background: linear-gradient(135deg,#003781,#006A86); color: white; border-radius: 12px; padding: 16px 20px; margin-bottom: 24px; display: flex; justify-content: space-between; align-items: center; }
+  .selected-plan-info .spi-label { font-size: 0.75rem; opacity: 0.7; }
+  .selected-plan-info .spi-val { font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 1rem; }
+
+  /* FEATURES SECTION */
+  .features-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 48px; }
+  @media(max-width:768px) { .features-grid { grid-template-columns: 1fr 1fr; } }
+  @media(max-width:480px) { .features-grid { grid-template-columns: 1fr; } }
+  .feature-card { background: white; border: 1px solid var(--border); border-radius: 16px; padding: 28px 24px; }
+  .feature-card .icon { font-size: 2rem; margin-bottom: 14px; }
+  .feature-card h4 { font-size: 1rem; font-weight: 700; color: var(--navy); margin-bottom: 8px; }
+  .feature-card p { font-size: 0.85rem; color: var(--muted); line-height: 1.6; }
+
+  /* HOW IT WORKS */
+  .how-section { background: var(--navy); }
+  .how-section .section-tag { background: rgba(255,255,255,0.1); color: rgba(255,255,255,0.8); }
+  .how-section .section-title { color: white; }
+  .how-section .section-sub { color: rgba(255,255,255,0.65); }
+  .steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; margin-top: 48px; }
+  @media(max-width:768px) { .steps { grid-template-columns: 1fr 1fr; } }
+  .step { text-align: center; }
+  .step-num { width: 52px; height: 52px; border-radius: 50%; background: rgba(255,255,255,0.1); border: 1.5px solid rgba(255,255,255,0.2); display: flex; align-items: center; justify-content: center; margin: 0 auto 16px; font-family: 'Montserrat', sans-serif; font-weight: 800; font-size: 1.2rem; color: #7FDFF5; }
+  .step h4 { font-size: 0.95rem; font-weight: 700; color: white; margin-bottom: 8px; }
+  .step p { font-size: 0.82rem; color: rgba(255,255,255,0.6); line-height: 1.6; }
+
+  /* FAQ */
+  .faq-list { margin-top: 40px; }
+  .faq-item { border: 1px solid var(--border); border-radius: 12px; margin-bottom: 10px; overflow: hidden; }
+  .faq-q { padding: 18px 20px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; font-weight: 600; font-size: 0.9rem; color: var(--dark); background: white; }
+  .faq-q .arrow { font-size: 0.8rem; color: var(--muted); transition: transform 0.2s; }
+  .faq-item.open .faq-q .arrow { transform: rotate(180deg); }
+  .faq-a { display: none; padding: 0 20px 18px; font-size: 0.875rem; color: var(--muted); line-height: 1.7; background: white; }
+  .faq-item.open .faq-a { display: block; }
+
+  /* FOOTER */
+  footer { background: var(--dark); padding: 40px 48px; text-align: center; }
+  footer .logo { font-family: 'Montserrat', sans-serif; font-weight: 800; font-size: 1.4rem; color: white; margin-bottom: 12px; }
+  footer .logo span { color: var(--sky); }
+  footer p { font-size: 0.78rem; color: rgba(255,255,255,0.4); line-height: 1.7; max-width: 600px; margin: 0 auto; }
+
+  /* Toast */
+  .toast { display: none; position: fixed; bottom: 32px; left: 50%; transform: translateX(-50%); background: var(--green); color: white; padding: 14px 28px; border-radius: 50px; font-weight: 600; font-size: 0.9rem; z-index: 999; box-shadow: 0 8px 32px rgba(0,0,0,0.2); }
+  .toast.show { display: block; animation: fadeInUp 0.3s; }
+  @keyframes fadeInUp { from { opacity:0; transform: translateX(-50%) translateY(20px); } to { opacity:1; transform: translateX(-50%) translateY(0); } }
+
+  /* Scrollbar for plans */
+  .scroll-hint { font-size: 0.75rem; color: var(--muted); display: flex; align-items: center; gap: 6px; margin-bottom: 10px; }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-logo" href="https://finnomalaysia.com">FINNO<span>.</span></a>
+  <a class="nav-cta" href="#pricing">Get a Quote</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-badge">Personal Accident Insurance</div>
+    <h1>Powered Up Cover with<br><em>Allianz Shield Plus</em></h1>
+    <p>Accidents happen when we least expect them. Protect your income, your family, and your future with Malaysia's most comprehensive personal accident plan.</p>
+    <div class="hero-stats">
+      <div class="hero-stat"><div class="num">19</div><div class="lbl">Primary Benefits</div></div>
+      <div class="hero-stat"><div class="num">RM3M</div><div class="lbl">Max Coverage</div></div>
+      <div class="hero-stat"><div class="num">100%</div><div class="lbl">Renewal Bonus</div></div>
+      <div class="hero-stat"><div class="num">50%</div><div class="lbl">Family Discount</div></div>
+    </div>
+    <div class="hero-ctas">
+      <a class="hero-btn-primary" href="#pricing">Get a Quote</a>
+      <a class="hero-btn-secondary" href="#pricing">View Plans →</a>
+    </div>
+    <p class="hero-fineprint">Distributed by CK Wealth Solution (KL-22692)</p>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section class="section">
+  <div class="section-inner">
+    <span class="section-tag">Why Choose This Plan</span>
+    <h2 class="section-title">Comprehensive Protection,<br>Built for Real Life</h2>
+    <p class="section-sub">From accidental death to snatch theft, Allianz Shield Plus covers the unexpected moments that can derail your financial stability.</p>
+    <div class="features-grid">
+      <div class="feature-card"><div class="icon">🛡️</div><h4>Accidental Death &amp; Disablement</h4><p>Full Principal Sum Insured paid in the event of accidental death or permanent disablement.</p></div>
+      <div class="feature-card"><div class="icon">🏥</div><h4>Medical &amp; Hospital Expenses</h4><p>Covers hospitalisation, surgery, alternative medicine, and cashless admission at participating hospitals.</p></div>
+      <div class="feature-card"><div class="icon">📈</div><h4>Renewal Bonus up to 100%</h4><p>Your sum insured grows every year you renew — up to 20% per year with no claim impact on most benefits.</p></div>
+      <div class="feature-card"><div class="icon">✈️</div><h4>Double Indemnity Overseas</h4><p>Travelling abroad or on public transport? Get double the payout if the worst happens.</p></div>
+      <div class="feature-card"><div class="icon">👨‍👩‍👧‍👦</div><h4>Family Plan Advantage</h4><p>Insure your whole family under one policy and enjoy up to 50% premium discount for each child.</p></div>
+      <div class="feature-card"><div class="icon">📋</div><h4>Extended Coverage</h4><p>Covers motorcycling, water sports, snatch theft, flood, kidnap, miscarriage, and much more.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING CALCULATOR -->
+<section class="section pricing-section" id="pricing">
+  <div class="section-inner">
+    <span class="section-tag">Dynamic Pricing</span>
+    <h2 class="section-title">Find Your Perfect Plan</h2>
+    <p class="section-sub">Choose your age group and occupation type to see the exact plans and benefits available to you.</p>
+
+    <div class="calc-box">
+      <div class="calc-row">
+        <div class="form-group">
+          <label>Age Group <span class="req">*</span></label>
+          <div class="seg-control">
+            <button class="seg-btn active" onclick="setAge('below50', this)">Below 50 years</button>
+            <button class="seg-btn" onclick="setAge('above51', this)">51–80 years</button>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>
+            <div class="tooltip-wrap">
+              Occupation Type <span class="req">*</span>
+              <span class="tooltip-icon">i</span>
+              <div class="tooltip-box">
+                <strong>Category A (Office):</strong> Office work, limited travel, less than 50% manual labour. Includes managers, professionals, students, housewives, retirees.<br><br>
+                <strong>Category B (Manual):</strong> Skilled/semi-skilled, machinery use, hazardous conditions, more than 50% manual labour. Includes drivers, factory workers, agricultural workers.
+              </div>
+            </div>
+          </label>
+          <div class="seg-control">
+            <button class="seg-btn active" onclick="setOccupation('A', this)">Cat A</button>
+            <button class="seg-btn" onclick="setOccupation('B', this)">Cat B</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="scroll-hint">← Scroll to explore all plans →</div>
+      <div class="plans-scroll" id="plansContainer"></div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="section how-section">
+  <div class="section-inner">
+    <span class="section-tag">Claim Process</span>
+    <h2 class="section-title">What To Do When Accidents Happen</h2>
+    <p class="section-sub">Allianz commits to paying your claim within 7 working days of receiving completed documents.</p>
+    <div class="steps">
+      <div class="step"><div class="step-num">1</div><h4>Prioritise Wellbeing</h4><p>Seek immediate medical attention if needed. Your health comes first.</p></div>
+      <div class="step"><div class="step-num">2</div><h4>Capture Details</h4><p>Keep all receipts, medical reports, police reports, and medical leave certificates.</p></div>
+      <div class="step"><div class="step-num">3</div><h4>Notify Allianz</h4><p>Download MyAllianz app, contact your agent, or call 1 800 225 542.</p></div>
+      <div class="step"><div class="step-num">4</div><h4>Get Paid</h4><p>Allianz processes and pays your claim within 7 working days of complete documents.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="section">
+  <div class="section-inner">
+    <span class="section-tag">FAQ</span>
+    <h2 class="section-title">Frequently Asked Questions</h2>
+    <div class="faq-list" id="faqList">
+      <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">Do I still need this if I already have life and health insurance? <span class="arrow">▼</span></div><div class="faq-a">Yes. Life insurance covers death benefits to your nominee. Health insurance reimburses hospitalisation. Allianz Shield Plus specifically protects against financial risk from accidental permanent disablement or accidental death. The benefits are payable regardless of any other insurance you hold.</div></div>
+      <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">What if I have an accident overseas? <span class="arrow">▼</span></div><div class="faq-a">The policy offers worldwide coverage. Your claim will be paid even if the accident occurs overseas. You may claim Medical Expenses, Hospital Income, Snatch Theft, and many other benefits abroad.</div></div>
+      <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">How does the Renewal Bonus work? <span class="arrow">▼</span></div><div class="faq-a">Each year you renew without claiming under Permanent Disablement or Double Indemnity, your Principal Sum Insured increases by 20% (ages 30 days–40 years) or 10% (ages 41+), up to a maximum of 100% of the original sum insured.</div></div>
+      <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">How do I get the family discount? <span class="arrow">▼</span></div><div class="faq-a">If you are the sole insured parent, each child gets a 30% premium discount. If both parents are insured under the same policy, each child gets a 50% discount. Children must be unmarried and under 18, or under 24 if a full-time student.</div></div>
+      <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">What is excluded from this policy? <span class="arrow">▼</span></div><div class="faq-a">Exclusions include war, civil war, AIDS, insanity, childbirth, provoked murder or assault, aerial activities, martial arts, racing, radiation, and nuclear weapons material. Army/military, war correspondents, explosive handlers, and underground mining workers are excluded occupations. Please refer to the full policy for a complete list.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="logo">FINNO<span>.</span></div>
+  <p>Distributed by CK Wealth Solution (KL-22692) · Allianz General Insurance Company (Malaysia) Berhad 200601015674 (735426-V) · Licensed under the Financial Services Act 2013 and regulated by Bank Negara Malaysia.<br><br>
+  This page is not a Contract of Insurance. The description of available cover is a brief summary only. Precise terms, benefits, conditions and exclusions are stated in the Policy document. This brochure is valid from 1 March 2024.</p>
+</footer>
+
+<!-- PLAN FULL BENEFITS MODAL -->
+<div class="modal-overlay" id="planModal">
+  <div class="modal">
+    <button class="modal-close" onclick="closePlanModal()">✕</button>
+    <h3 id="modalPlanName">Plan 1</h3>
+    <p class="modal-sub" id="modalPlanSub">Occupation Category A · Age below 50</p>
+    <div class="benefits-grid" id="modalBenefits"></div>
+    <div class="modal-docs">
+      <button class="doc-btn" onclick="openDoc('pds')">📄 Product Disclosure Sheet</button>
+      <button class="doc-btn" onclick="openDoc('wording')">📃 Policy Wording</button>
+      <button class="doc-btn" onclick="openDoc('brochure')">📎 Brochure</button>
+    </div>
+    <button class="btn-apply" onclick="openAppModal()">Apply for This Plan →</button>
+  </div>
+</div>
+
+<!-- APPLICATION MODAL -->
+<div class="modal-overlay app-modal" id="appModal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeAppModal()">✕</button>
+    <h3>Apply for Allianz Shield Plus</h3>
+    <p class="modal-sub">Fill in your details and we'll get back to you shortly.</p>
+
+    <div class="selected-plan-info" id="appPlanSummary">
+      <div><div class="spi-label">Selected Plan</div><div class="spi-val" id="appPlanName">—</div></div>
+      <div style="text-align:right"><div class="spi-label">Annual Premium</div><div class="spi-val" id="appPlanPrice">—</div></div>
+    </div>
+
+    <p class="form-section-title">Personal Details</p>
+    <div class="form-row">
+      <div class="form-field"><label>Full Name <span style="color:#e03">*</span></label><input type="text" id="f_name" placeholder="As per NRIC"></div>
+      <div class="form-field"><label>NRIC Number <span style="color:#e03">*</span></label><input type="text" id="f_nric" placeholder="e.g. 901231-01-1234"></div>
+    </div>
+    <div class="form-row">
+      <div class="form-field"><label>Date of Birth <span style="color:#e03">*</span></label><input type="date" id="f_dob"></div>
+      <div class="form-field"><label>Phone Number <span style="color:#e03">*</span></label><input type="tel" id="f_phone" placeholder="+60 12-345 6789"></div>
+    </div>
+    <div class="form-field"><label>Address <span style="color:#e03">*</span></label><textarea id="f_address" rows="2" placeholder="Full residential address"></textarea></div>
+    <div class="form-field">
+      <label>Email <span style="color:#e03">*</span></label>
+      <input type="email" id="f_email" placeholder="you@email.com">
+    </div>
+    <div class="form-field">
+      <label>Occupation <span style="color:#e03">*</span></label>
+      <input type="text" id="f_occupation" placeholder="e.g. Software Engineer, Teacher, Driver">
+    </div>
+
+    <hr class="section-divider">
+    <p class="form-section-title">Nominee Details</p>
+    <div id="nomineeContainer"></div>
+    <button class="btn-add-nominee" id="addNomineeBtn" onclick="addNominee()">+ Add Nominee</button>
+
+    <button class="btn-submit" onclick="submitApplication()">Submit Application</button>
+    <p style="font-size:0.72rem; color:var(--muted); text-align:center; margin-top:12px;">By submitting, you agree to be contacted by a FINNO advisor to complete your application. This does not constitute a contract of insurance.</p>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast">✅ Application submitted! We'll be in touch shortly.</div>
+
+<script>
+// ─── DATA ───────────────────────────────────────────────
+const PLANS_A = [
+  { name:'Plan 1', sum:60000, medical:3500, altMed:350, hospIncome:85, premium:{below50:103, above51:123} },
+  { name:'Plan 2', sum:120000, medical:4500, altMed:400, hospIncome:85, premium:{below50:177, above51:212} },
+  { name:'Plan 3', sum:180000, medical:5500, altMed:450, hospIncome:85, premium:{below50:229, above51:275} },
+  { name:'Plan 4', sum:240000, medical:6500, altMed:500, hospIncome:110, premium:{below50:303, above51:363} },
+  { name:'Plan 5', sum:360000, medical:7500, altMed:550, hospIncome:110, premium:{below50:418, above51:501} },
+  { name:'Plan 6', sum:600000, medical:8500, altMed:600, hospIncome:185, premium:{below50:670, above51:804} },
+  { name:'Plan 7', sum:900000, medical:9500, altMed:650, hospIncome:185, premium:{below50:943, above51:1131} },
+  { name:'Plan 8', sum:1200000, medical:10000, altMed:700, hospIncome:235, premium:{below50:1248, above51:1497} },
+  { name:'Plan 9', sum:2000000, medical:12000, altMed:750, hospIncome:250, premium:{below50:1816, above51:2179} },
+  { name:'Plan 10', sum:3000000, medical:15000, altMed:800, hospIncome:300, premium:{below50:2674, above51:3209} },
+];
+const PLANS_B = [
+  { name:'Plan 1', sum:60000, medical:3500, altMed:350, hospIncome:85, premium:{below50:168, above51:201} },
+  { name:'Plan 2', sum:120000, medical:4500, altMed:400, hospIncome:85, premium:{below50:273, above51:327} },
+  { name:'Plan 3', sum:180000, medical:5500, altMed:450, hospIncome:85, premium:{below50:389, above51:467} },
+  { name:'Plan 4', sum:240000, medical:6500, altMed:500, hospIncome:110, premium:{below50:525, above51:630} },
+  { name:'Plan 5', sum:360000, medical:7500, altMed:550, hospIncome:110, premium:{below50:788, above51:945} },
+];
+
+const FIXED_BENEFITS = [
+  ['Blood Transfusion','20% of Principal Sum'],
+  ['Dental/Cosmetic Surgery','Up to RM5,000'],
+  ['Renewal Bonus','Up to 100% of Principal Sum'],
+  ['Permanent Impotency/Infertility','20% of Principal Sum'],
+  ['Kidnap — Expenses','RM10,000'],
+  ['Kidnap — Reward','RM50,000'],
+  ['Ambulance Fee','Up to RM500'],
+  ['Funeral Expenses','RM5,000'],
+  ['Bereavement Allowance','20% of Principal Sum'],
+  ['Personal Liability','3× Principal Sum'],
+  ['Mobility Expenses','Up to RM2,000'],
+  ['Repatriation Expenses','Up to RM20,000'],
+  ['Miscarriage (due to accident)','RM2,000'],
+  ['Compassionate Care','Up to RM10,000'],
+  ['Snatch Theft','RM600'],
+  ['Double Indemnity (overseas/public transport)','2× Principal Sum + Renewal Bonus'],
+];
+
+let selectedAge = 'below50';
+let selectedOcc = 'A';
+let selectedPlanIndex = 0;
+
+function fmt(n) { return 'RM ' + n.toLocaleString(); }
+
+function renderPlans() {
+  const plans = selectedOcc === 'A' ? PLANS_A : PLANS_B;
+  const container = document.getElementById('plansContainer');
+  container.innerHTML = '';
+  plans.forEach((p, i) => {
+    const price = p.premium[selectedAge];
+    const card = document.createElement('div');
+    card.className = 'plan-card' + (i === selectedPlanIndex ? ' selected' : '');
+    card.innerHTML = `
+      <span class="selected-badge">Selected</span>
+      <div class="plan-name">${p.name}</div>
+      <div class="plan-sum">${fmt(p.sum)}</div>
+      <div class="plan-sum-label">Principal Sum Insured</div>
+      <div class="plan-detail"><span>Medical Expenses</span><strong>${fmt(p.medical)}</strong></div>
+      <div class="plan-detail"><span>Hospital Income/day</span><strong>RM ${p.hospIncome}</strong></div>
+      <div class="plan-price">
+        <div class="price">RM ${price.toLocaleString()}</div>
+        <div class="price-label">per year (excl. 8% SST + RM10 stamp duty)</div>
+      </div>
+      <button class="btn-view-full" onclick="openPlanModal(${i})">View Full Benefits</button>
+    `;
+    card.addEventListener('click', (e) => {
+      if (e.target.classList.contains('btn-view-full')) return;
+      selectedPlanIndex = i;
+      renderPlans();
+    });
+    container.appendChild(card);
+  });
+}
+
+function setAge(val, btn) {
+  selectedAge = val;
+  btn.parentElement.querySelectorAll('.seg-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  selectedPlanIndex = 0;
+  renderPlans();
+}
+
+function setOccupation(val, btn) {
+  selectedOcc = val;
+  btn.parentElement.querySelectorAll('.seg-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  selectedPlanIndex = 0;
+  renderPlans();
+}
+
+function openPlanModal(idx) {
+  selectedPlanIndex = idx;
+  const plans = selectedOcc === 'A' ? PLANS_A : PLANS_B;
+  const p = plans[idx];
+  const price = p.premium[selectedAge];
+  const ageLabel = selectedAge === 'below50' ? 'Age 50 & below' : 'Age 51–80';
+  const occLabel = selectedOcc === 'A' ? 'Occupation Category A (Office)' : 'Occupation Category B (Manual)';
+
+  document.getElementById('modalPlanName').textContent = `Allianz Shield Plus — ${p.name}`;
+  document.getElementById('modalPlanSub').textContent = `${occLabel} · ${ageLabel} · RM ${price.toLocaleString()}/year`;
+
+  const dynamicBenefits = [
+    ['Principal Sum (Accidental Death/Disablement)', fmt(p.sum)],
+    ['Medical Expenses', fmt(p.medical)],
+    ['Alternative Medicine', fmt(p.altMed)],
+    ['Hospital Income (max 180 days)', `RM ${p.hospIncome}/day`],
+  ];
+  const allBenefits = [...dynamicBenefits, ...FIXED_BENEFITS];
+  const grid = document.getElementById('modalBenefits');
+  grid.innerHTML = allBenefits.map(([label, val]) => `
+    <div class="benefit-row">
+      <span class="b-label">${label}</span>
+      <span class="b-val">${val}</span>
+    </div>
+  `).join('');
+
+  document.getElementById('planModal').classList.add('open');
+  renderPlans();
+}
+
+function closePlanModal() {
+  document.getElementById('planModal').classList.remove('open');
+}
+
+// ─── DOCUMENT POPUPS ─────────────────────────────────────
+function openDoc(type) {
+  const urls = {
+    pds: 'PLACEHOLDER_PDS_URL',
+    wording: 'PLACEHOLDER_POLICY_WORDING_URL',
+    brochure: 'PLACEHOLDER_BROCHURE_URL',
+  };
+  const url = urls[type];
+  if (url.startsWith('PLACEHOLDER')) {
+    alert('Document link coming soon. Please contact your FINNO advisor for the document.');
+    return;
+  }
+  window.open(url, '_blank', 'noopener,noreferrer');
+}
+
+// ─── APPLICATION FORM ─────────────────────────────────────
+let nomineeCount = 0;
+
+function openAppModal() {
+  const plans = selectedOcc === 'A' ? PLANS_A : PLANS_B;
+  const p = plans[selectedPlanIndex];
+  const price = p.premium[selectedAge];
+  const occLabel = selectedOcc === 'A' ? 'Category A (Office)' : 'Category B (Manual)';
+  document.getElementById('appPlanName').textContent = `${p.name} · ${occLabel}`;
+  document.getElementById('appPlanPrice').textContent = `RM ${price.toLocaleString()}/year`;
+  document.getElementById('appModal').classList.add('open');
+  closePlanModal();
+}
+
+function closeAppModal() {
+  document.getElementById('appModal').classList.remove('open');
+}
+
+function addNominee() {
+  if (nomineeCount >= 2) { alert('Maximum 2 nominees allowed.'); return; }
+  nomineeCount++;
+  const container = document.getElementById('nomineeContainer');
+  const block = document.createElement('div');
+  block.className = 'nominee-block';
+  block.id = `nominee-${nomineeCount}`;
+  block.innerHTML = `
+    <h5>Nominee ${nomineeCount}</h5>
+    <button class="btn-remove-nominee" onclick="removeNominee(${nomineeCount})">✕ Remove</button>
+    <div class="form-row">
+      <div class="form-field"><label>Full Name</label><input type="text" id="n${nomineeCount}_name" placeholder="Full name"></div>
+      <div class="form-field"><label>NRIC Number</label><input type="text" id="n${nomineeCount}_nric" placeholder="e.g. 901231-01-1234"></div>
+    </div>
+    <div class="form-row">
+      <div class="form-field"><label>Relationship</label>
+        <select id="n${nomineeCount}_rel">
+          <option value="">Select relationship</option>
+          <option>Spouse</option><option>Child</option><option>Parent</option>
+          <option>Sibling</option><option>Other</option>
+        </select>
+      </div>
+      <div class="form-field"><label>Share %</label><input type="number" id="n${nomineeCount}_share" placeholder="e.g. 50" min="1" max="100"></div>
+    </div>
+  `;
+  container.appendChild(block);
+  if (nomineeCount >= 2) document.getElementById('addNomineeBtn').style.display = 'none';
+}
+
+function removeNominee(id) {
+  const el = document.getElementById(`nominee-${id}`);
+  if (el) { el.remove(); nomineeCount--; }
+  document.getElementById('addNomineeBtn').style.display = 'inline-flex';
+}
+
+function submitApplication() {
+  const name = document.getElementById('f_name').value.trim();
+  const nric = document.getElementById('f_nric').value.trim();
+  const email = document.getElementById('f_email').value.trim();
+  const phone = document.getElementById('f_phone').value.trim();
+  if (!name || !nric || !email || !phone) { alert('Please fill in all required fields.'); return; }
+
+  const plans = selectedOcc === 'A' ? PLANS_A : PLANS_B;
+  const p = plans[selectedPlanIndex];
+  const price = p.premium[selectedAge];
+
+  const nominees = [];
+  for (let i = 1; i <= 2; i++) {
+    const nEl = document.getElementById(`nominee-${i}`);
+    if (nEl) {
+      nominees.push({
+        name: document.getElementById(`n${i}_name`)?.value || '',
+        nric: document.getElementById(`n${i}_nric`)?.value || '',
+        relationship: document.getElementById(`n${i}_rel`)?.value || '',
+        share: document.getElementById(`n${i}_share`)?.value || '',
+      });
+    }
+  }
+
+  const payload = {
+    plan: p.name,
+    occupation_category: selectedOcc,
+    age_group: selectedAge,
+    annual_premium: price,
+    sum_insured: p.sum,
+    personal: {
+      name: name,
+      nric: nric,
+      dob: document.getElementById('f_dob').value,
+      address: document.getElementById('f_address').value,
+      email: email,
+      phone: phone,
+      occupation: document.getElementById('f_occupation').value,
+    },
+    nominees: nominees,
+    submitted_at: new Date().toISOString(),
+  };
+
+  const WEBHOOK_URL = 'PLACEHOLDER_N8N_WEBHOOK_URL'; // ← Replace with your n8n webhook URL
+  const REDIRECT_URL = 'PLACEHOLDER_REDIRECT_URL'; // ← Replace with your post-submission redirect URL
+
+  const handleSuccess = () => {
+    closeAppModal();
+    if (REDIRECT_URL !== 'PLACEHOLDER_REDIRECT_URL') {
+      window.location.href = REDIRECT_URL;
+    } else {
+      showToast();
+    }
+  };
+
+  if (WEBHOOK_URL === 'PLACEHOLDER_N8N_WEBHOOK_URL') {
+    console.log('Webhook payload:', payload);
+    handleSuccess();
+    return;
+  }
+
+  fetch(WEBHOOK_URL, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload),
+  })
+  .then(() => handleSuccess())
+  .catch(() => handleSuccess());
+}
+
+function showToast() {
+  const t = document.getElementById('toast');
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 4000);
+}
+
+// ─── FAQ ──────────────────────────────────────────────────
+function toggleFaq(el) {
+  const item = el.parentElement;
+  item.classList.toggle('open');
+}
+
+// ─── CLOSE MODALS ON OVERLAY CLICK ───────────────────────
+document.getElementById('planModal').addEventListener('click', function(e) {
+  if (e.target === this) closePlanModal();
+});
+document.getElementById('appModal').addEventListener('click', function(e) {
+  if (e.target === this) closeAppModal();
+});
+
+// ─── INIT ─────────────────────────────────────────────────
+renderPlans();
+</script>
+</body>
+</html>
