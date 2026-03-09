@@ -610,9 +610,9 @@ function closePlanModal() {
 // ─── DOCUMENT POPUPS ─────────────────────────────────────
 function openDoc(type) {
   const urls = {
-    pds: 'PLACEHOLDER_PDS_URL',
-    wording: 'PLACEHOLDER_POLICY_WORDING_URL',
-    brochure: 'PLACEHOLDER_BROCHURE_URL',
+    pds: 'https://www.allianz.com.my/content/dam/onemarketing/azmb/wwwallianzcommy/product-document/ASP-PDS_ENG.pdf',
+    wording: 'https://www.allianz.com.my/content/dam/onemarketing/azmb/wwwallianzcommy/personal/life-health-and-savings/personal-accident/allianz-shield-plus/AllianzShieldPlus_PW_EN.pdf',
+    brochure: 'https://www.allianz.com.my/content/dam/onemarketing/azmb/wwwallianzcommy/product-document/ASP_newBrochure_ENG.pdf',
   };
   const url = urls[type];
   if (url.startsWith('PLACEHOLDER')) {
@@ -718,19 +718,19 @@ function submitApplication() {
     submitted_at: new Date().toISOString(),
   };
 
-  const WEBHOOK_URL = 'PLACEHOLDER_N8N_WEBHOOK_URL'; // ← Replace with your n8n webhook URL
-  const REDIRECT_URL = 'PLACEHOLDER_REDIRECT_URL'; // ← Replace with your post-submission redirect URL
+  const WEBHOOK_URL = 'https://n8n.srv1120581.hstgr.cloud/webhook-test/cbd17f88-64c0-403c-a626-9446f30cf123'; // ← Replace with your n8n webhook URL
+  const REDIRECT_URL = 'https://finnomalaysia.com/thank-you/'; // ← Replace with your post-submission redirect URL
 
   const handleSuccess = () => {
     closeAppModal();
-    if (REDIRECT_URL !== 'PLACEHOLDER_REDIRECT_URL') {
+    if (REDIRECT_URL !== 'https://finnomalaysia.com/thank-you/') {
       window.location.href = REDIRECT_URL;
     } else {
       showToast();
     }
   };
 
-  if (WEBHOOK_URL === 'PLACEHOLDER_N8N_WEBHOOK_URL') {
+  if (WEBHOOK_URL === 'https://n8n.srv1120581.hstgr.cloud/webhook-test/cbd17f88-64c0-403c-a626-9446f30cf123') {
     console.log('Webhook payload:', payload);
     handleSuccess();
     return;
