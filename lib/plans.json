@@ -1,0 +1,544 @@
+{
+  "notes": {
+    "eligibilityAge": "From 30 days up to age 65. Renewable up to age 80.",
+    "lastEntryAge": 65,
+    "renewableUpToAge": 80,
+    "taxNote": "Premium is subject to 8% Service Tax and RM10 Stamp Duty.",
+    "plan10Note": "Plan 10 requires underwriting. Not shown on website.",
+    "categoryADescription": "Occupations where duties are confined to office work or limited travelling and less than 50% engagement in manual labour.",
+    "categoryBDescription": "Skilled, semi-skilled, use of equipment or machinery exposed to some hazardous conditions and more than 50% engagement in manual labour.",
+    "categoryAExamples": [
+      "Legislators, senior officials and managers/directors",
+      "Professionals",
+      "Technicians and technical related tasks",
+      "Clerical workers",
+      "Service workers and shop and market sales workers",
+      "Housewife/househusband",
+      "Retiree",
+      "Unemployed",
+      "Student",
+      "Child"
+    ],
+    "categoryBExamples": [
+      "Skilled agricultural and fishery workers",
+      "Craft and related trades workers",
+      "Plant and machine operators and assemblers",
+      "Unskilled occupations involving physical tasks",
+      "Drivers and riders (including truck drivers, taxi, e-hailing and p-hailing)",
+      "Divers",
+      "Aircraft testers",
+      "Pilots or crews (individual policyholders only)",
+      "Professional sports-persons (individual policyholders only)",
+      "Seamen and sea fishermen",
+      "Jockeys",
+      "Sawyers and timber logging workers",
+      "Steeplejacks",
+      "Stevedores",
+      "Persons engaged in ambulance services",
+      "Woodworking machinists"
+    ],
+    "excludedOccupations": [
+      "Army/military",
+      "War correspondents",
+      "Explosive handlers",
+      "Underground tunneling and mining"
+    ]
+  },
+  "plans": [
+    {
+      "id": 1,
+      "name": "Plan 1",
+      "availableForCategoryB": true,
+      "requiresUnderwriting": false,
+      "sumInsured": 60000,
+      "benefits": {
+        "medicalExpenses": 3500,
+        "alternativeMedicine": 350,
+        "hospitalIncomePerDay": 85,
+        "hospitalIncomeMaxDays": 180,
+        "dentalCorrection": 5000,
+        "ambulanceFee": 500,
+        "funeralExpenses": 5000,
+        "mobilityExpenses": 2000,
+        "repatriationExpenses": 20000,
+        "miscarriage": 2000,
+        "compassionateCare": 10000,
+        "snatachTheft": 600,
+        "kidnap": { "expenses": 10000, "reward": 50000 },
+        "bloodTransfusion": "20% of Principal Sum Insured",
+        "permanentImpotencyOrInfertility": "20% of Principal Sum Insured",
+        "bereavementAllowance": "20% of Principal Sum Insured",
+        "personalLiability": "3x Principal Sum Insured",
+        "doubleIndemnity": "2x Principal Sum Insured + Renewal Bonus",
+        "renewalBonus": "Up to 100% of Principal Sum Insured"
+      },
+      "renewalBonusRate": {
+        "age30DaysTo40Years": "20% per year, max 100%",
+        "age41AndAbove": "10% per year, max 100%"
+      },
+      "weeklyBenefit": {
+        "categoryA": 50,
+        "categoryB": 50
+      },
+      "premiums": {
+        "withoutWeeklyBenefit": {
+          "categoryA": {
+            "age50AndBelow": 103,
+            "age51To80": 123
+          },
+          "categoryB": {
+            "age50AndBelow": 168,
+            "age51To80": 201
+          }
+        },
+        "withWeeklyBenefit": {
+          "categoryA": {
+            "age50AndBelow": 145,
+            "age51To80": 174
+          },
+          "categoryB": {
+            "age50AndBelow": 200,
+            "age51To80": 240
+          }
+        }
+      }
+    },
+    {
+      "id": 2,
+      "name": "Plan 2",
+      "availableForCategoryB": true,
+      "requiresUnderwriting": false,
+      "sumInsured": 120000,
+      "benefits": {
+        "medicalExpenses": 4500,
+        "alternativeMedicine": 400,
+        "hospitalIncomePerDay": 85,
+        "hospitalIncomeMaxDays": 180,
+        "dentalCorrection": 5000,
+        "ambulanceFee": 500,
+        "funeralExpenses": 5000,
+        "mobilityExpenses": 2000,
+        "repatriationExpenses": 20000,
+        "miscarriage": 2000,
+        "compassionateCare": 10000,
+        "snatachTheft": 600,
+        "kidnap": { "expenses": 10000, "reward": 50000 },
+        "bloodTransfusion": "20% of Principal Sum Insured",
+        "permanentImpotencyOrInfertility": "20% of Principal Sum Insured",
+        "bereavementAllowance": "20% of Principal Sum Insured",
+        "personalLiability": "3x Principal Sum Insured",
+        "doubleIndemnity": "2x Principal Sum Insured + Renewal Bonus",
+        "renewalBonus": "Up to 100% of Principal Sum Insured"
+      },
+      "weeklyBenefit": {
+        "categoryA": 75,
+        "categoryB": 50
+      },
+      "premiums": {
+        "withoutWeeklyBenefit": {
+          "categoryA": {
+            "age50AndBelow": 177,
+            "age51To80": 212
+          },
+          "categoryB": {
+            "age50AndBelow": 273,
+            "age51To80": 327
+          }
+        },
+        "withWeeklyBenefit": {
+          "categoryA": {
+            "age50AndBelow": 219,
+            "age51To80": 263
+          },
+          "categoryB": {
+            "age50AndBelow": 305,
+            "age51To80": 366
+          }
+        }
+      }
+    },
+    {
+      "id": 3,
+      "name": "Plan 3",
+      "availableForCategoryB": true,
+      "requiresUnderwriting": false,
+      "sumInsured": 180000,
+      "benefits": {
+        "medicalExpenses": 5500,
+        "alternativeMedicine": 450,
+        "hospitalIncomePerDay": 85,
+        "hospitalIncomeMaxDays": 180,
+        "dentalCorrection": 5000,
+        "ambulanceFee": 500,
+        "funeralExpenses": 5000,
+        "mobilityExpenses": 2000,
+        "repatriationExpenses": 20000,
+        "miscarriage": 2000,
+        "compassionateCare": 10000,
+        "snatachTheft": 600,
+        "kidnap": { "expenses": 10000, "reward": 50000 },
+        "bloodTransfusion": "20% of Principal Sum Insured",
+        "permanentImpotencyOrInfertility": "20% of Principal Sum Insured",
+        "bereavementAllowance": "20% of Principal Sum Insured",
+        "personalLiability": "3x Principal Sum Insured",
+        "doubleIndemnity": "2x Principal Sum Insured + Renewal Bonus",
+        "renewalBonus": "Up to 100% of Principal Sum Insured"
+      },
+      "weeklyBenefit": {
+        "categoryA": 100,
+        "categoryB": 50
+      },
+      "premiums": {
+        "withoutWeeklyBenefit": {
+          "categoryA": {
+            "age50AndBelow": 229,
+            "age51To80": 275
+          },
+          "categoryB": {
+            "age50AndBelow": 389,
+            "age51To80": 467
+          }
+        },
+        "withWeeklyBenefit": {
+          "categoryA": {
+            "age50AndBelow": 292,
+            "age51To80": 350
+          },
+          "categoryB": {
+            "age50AndBelow": 420,
+            "age51To80": 504
+          }
+        }
+      }
+    },
+    {
+      "id": 4,
+      "name": "Plan 4",
+      "availableForCategoryB": true,
+      "requiresUnderwriting": false,
+      "sumInsured": 240000,
+      "benefits": {
+        "medicalExpenses": 6500,
+        "alternativeMedicine": 500,
+        "hospitalIncomePerDay": 110,
+        "hospitalIncomeMaxDays": 180,
+        "dentalCorrection": 5000,
+        "ambulanceFee": 500,
+        "funeralExpenses": 5000,
+        "mobilityExpenses": 2000,
+        "repatriationExpenses": 20000,
+        "miscarriage": 2000,
+        "compassionateCare": 10000,
+        "snatachTheft": 600,
+        "kidnap": { "expenses": 10000, "reward": 50000 },
+        "bloodTransfusion": "20% of Principal Sum Insured",
+        "permanentImpotencyOrInfertility": "20% of Principal Sum Insured",
+        "bereavementAllowance": "20% of Principal Sum Insured",
+        "personalLiability": "3x Principal Sum Insured",
+        "doubleIndemnity": "2x Principal Sum Insured + Renewal Bonus",
+        "renewalBonus": "Up to 100% of Principal Sum Insured"
+      },
+      "weeklyBenefit": {
+        "categoryA": 125,
+        "categoryB": 75
+      },
+      "premiums": {
+        "withoutWeeklyBenefit": {
+          "categoryA": {
+            "age50AndBelow": 303,
+            "age51To80": 363
+          },
+          "categoryB": {
+            "age50AndBelow": 525,
+            "age51To80": 630
+          }
+        },
+        "withWeeklyBenefit": {
+          "categoryA": {
+            "age50AndBelow": 376,
+            "age51To80": 451
+          },
+          "categoryB": {
+            "age50AndBelow": 578,
+            "age51To80": 693
+          }
+        }
+      }
+    },
+    {
+      "id": 5,
+      "name": "Plan 5",
+      "availableForCategoryB": true,
+      "requiresUnderwriting": false,
+      "sumInsured": 360000,
+      "benefits": {
+        "medicalExpenses": 7500,
+        "alternativeMedicine": 550,
+        "hospitalIncomePerDay": 110,
+        "hospitalIncomeMaxDays": 180,
+        "dentalCorrection": 5000,
+        "ambulanceFee": 500,
+        "funeralExpenses": 5000,
+        "mobilityExpenses": 2000,
+        "repatriationExpenses": 20000,
+        "miscarriage": 2000,
+        "compassionateCare": 10000,
+        "snatachTheft": 600,
+        "kidnap": { "expenses": 10000, "reward": 50000 },
+        "bloodTransfusion": "20% of Principal Sum Insured",
+        "permanentImpotencyOrInfertility": "20% of Principal Sum Insured",
+        "bereavementAllowance": "20% of Principal Sum Insured",
+        "personalLiability": "3x Principal Sum Insured",
+        "doubleIndemnity": "2x Principal Sum Insured + Renewal Bonus",
+        "renewalBonus": "Up to 100% of Principal Sum Insured"
+      },
+      "weeklyBenefit": {
+        "categoryA": 150,
+        "categoryB": 75
+      },
+      "premiums": {
+        "withoutWeeklyBenefit": {
+          "categoryA": {
+            "age50AndBelow": 418,
+            "age51To80": 501
+          },
+          "categoryB": {
+            "age50AndBelow": 788,
+            "age51To80": 945
+          }
+        },
+        "withWeeklyBenefit": {
+          "categoryA": {
+            "age50AndBelow": 502,
+            "age51To80": 602
+          },
+          "categoryB": {
+            "age50AndBelow": 840,
+            "age51To80": 1008
+          }
+        }
+      }
+    },
+    {
+      "id": 6,
+      "name": "Plan 6",
+      "availableForCategoryB": false,
+      "requiresUnderwriting": false,
+      "sumInsured": 600000,
+      "benefits": {
+        "medicalExpenses": 8500,
+        "alternativeMedicine": 600,
+        "hospitalIncomePerDay": 185,
+        "hospitalIncomeMaxDays": 180,
+        "dentalCorrection": 5000,
+        "ambulanceFee": 500,
+        "funeralExpenses": 5000,
+        "mobilityExpenses": 2000,
+        "repatriationExpenses": 20000,
+        "miscarriage": 2000,
+        "compassionateCare": 10000,
+        "snatachTheft": 600,
+        "kidnap": { "expenses": 10000, "reward": 50000 },
+        "bloodTransfusion": "20% of Principal Sum Insured",
+        "permanentImpotencyOrInfertility": "20% of Principal Sum Insured",
+        "bereavementAllowance": "20% of Principal Sum Insured",
+        "personalLiability": "3x Principal Sum Insured",
+        "doubleIndemnity": "2x Principal Sum Insured + Renewal Bonus",
+        "renewalBonus": "Up to 100% of Principal Sum Insured"
+      },
+      "weeklyBenefit": {
+        "categoryA": 250,
+        "categoryB": null
+      },
+      "premiums": {
+        "withoutWeeklyBenefit": {
+          "categoryA": {
+            "age50AndBelow": 670,
+            "age51To80": 804
+          },
+          "categoryB": null
+        },
+        "withWeeklyBenefit": {
+          "categoryA": {
+            "age50AndBelow": 859,
+            "age51To80": 1031
+          },
+          "categoryB": null
+        }
+      }
+    },
+    {
+      "id": 7,
+      "name": "Plan 7",
+      "availableForCategoryB": false,
+      "requiresUnderwriting": false,
+      "sumInsured": 900000,
+      "benefits": {
+        "medicalExpenses": 9500,
+        "alternativeMedicine": 650,
+        "hospitalIncomePerDay": 185,
+        "hospitalIncomeMaxDays": 180,
+        "dentalCorrection": 5000,
+        "ambulanceFee": 500,
+        "funeralExpenses": 5000,
+        "mobilityExpenses": 2000,
+        "repatriationExpenses": 20000,
+        "miscarriage": 2000,
+        "compassionateCare": 10000,
+        "snatachTheft": 600,
+        "kidnap": { "expenses": 10000, "reward": 50000 },
+        "bloodTransfusion": "20% of Principal Sum Insured",
+        "permanentImpotencyOrInfertility": "20% of Principal Sum Insured",
+        "bereavementAllowance": "20% of Principal Sum Insured",
+        "personalLiability": "3x Principal Sum Insured",
+        "doubleIndemnity": "2x Principal Sum Insured + Renewal Bonus",
+        "renewalBonus": "Up to 100% of Principal Sum Insured"
+      },
+      "weeklyBenefit": {
+        "categoryA": 375,
+        "categoryB": null
+      },
+      "premiums": {
+        "withoutWeeklyBenefit": {
+          "categoryA": {
+            "age50AndBelow": 943,
+            "age51To80": 1131
+          },
+          "categoryB": null
+        },
+        "withWeeklyBenefit": {
+          "categoryA": {
+            "age50AndBelow": 1153,
+            "age51To80": 1383
+          },
+          "categoryB": null
+        }
+      }
+    },
+    {
+      "id": 8,
+      "name": "Plan 8",
+      "availableForCategoryB": false,
+      "requiresUnderwriting": false,
+      "sumInsured": 1200000,
+      "benefits": {
+        "medicalExpenses": 10000,
+        "alternativeMedicine": 700,
+        "hospitalIncomePerDay": 235,
+        "hospitalIncomeMaxDays": 180,
+        "dentalCorrection": 5000,
+        "ambulanceFee": 500,
+        "funeralExpenses": 5000,
+        "mobilityExpenses": 2000,
+        "repatriationExpenses": 20000,
+        "miscarriage": 2000,
+        "compassionateCare": 10000,
+        "snatachTheft": 600,
+        "kidnap": { "expenses": 10000, "reward": 50000 },
+        "bloodTransfusion": "20% of Principal Sum Insured",
+        "permanentImpotencyOrInfertility": "20% of Principal Sum Insured",
+        "bereavementAllowance": "20% of Principal Sum Insured",
+        "personalLiability": "3x Principal Sum Insured",
+        "doubleIndemnity": "2x Principal Sum Insured + Renewal Bonus",
+        "renewalBonus": "Up to 100% of Principal Sum Insured"
+      },
+      "weeklyBenefit": {
+        "categoryA": 500,
+        "categoryB": null
+      },
+      "premiums": {
+        "withoutWeeklyBenefit": {
+          "categoryA": {
+            "age50AndBelow": 1248,
+            "age51To80": 1497
+          },
+          "categoryB": null
+        },
+        "withWeeklyBenefit": {
+          "categoryA": {
+            "age50AndBelow": 1510,
+            "age51To80": 1812
+          },
+          "categoryB": null
+        }
+      }
+    },
+    {
+      "id": 9,
+      "name": "Plan 9",
+      "availableForCategoryB": false,
+      "requiresUnderwriting": false,
+      "sumInsured": 2000000,
+      "benefits": {
+        "medicalExpenses": 12000,
+        "alternativeMedicine": 750,
+        "hospitalIncomePerDay": 250,
+        "hospitalIncomeMaxDays": 180,
+        "dentalCorrection": 5000,
+        "ambulanceFee": 500,
+        "funeralExpenses": 5000,
+        "mobilityExpenses": 2000,
+        "repatriationExpenses": 20000,
+        "miscarriage": 2000,
+        "compassionateCare": 10000,
+        "snatachTheft": 600,
+        "kidnap": { "expenses": 10000, "reward": 50000 },
+        "bloodTransfusion": "20% of Principal Sum Insured",
+        "permanentImpotencyOrInfertility": "20% of Principal Sum Insured",
+        "bereavementAllowance": "20% of Principal Sum Insured",
+        "personalLiability": "3x Principal Sum Insured",
+        "doubleIndemnity": "2x Principal Sum Insured + Renewal Bonus",
+        "renewalBonus": "Up to 100% of Principal Sum Insured"
+      },
+      "weeklyBenefit": {
+        "categoryA": 750,
+        "categoryB": null
+      },
+      "premiums": {
+        "withoutWeeklyBenefit": {
+          "categoryA": {
+            "age50AndBelow": 1816,
+            "age51To80": 2179
+          },
+          "categoryB": null
+        },
+        "withWeeklyBenefit": {
+          "categoryA": {
+            "age50AndBelow": 2054,
+            "age51To80": 2465
+          },
+          "categoryB": null
+        }
+      }
+    }
+  ],
+  "optionalBenefits": {
+    "doubleIndemnityMotorVehicle": {
+      "description": "Doubles payout for death/total paralysis/loss of two or more limbs due to a motor vehicle accident.",
+      "additionalPremium": {
+        "categoryA": {
+          "plan1": 18, "plan2": 36, "plan3": 54, "plan4": 72,
+          "plan5": 108, "plan6": 180, "plan7": 270, "plan8": 360
+        },
+        "categoryB": {
+          "plan1": 18, "plan2": 36, "plan3": 54, "plan4": 72,
+          "plan5": 108
+        }
+      }
+    },
+    "medicalAssistanceEvacuation": {
+      "description": "24 Hours International and Domestic Medical Assistance and Evacuation Programme",
+      "coverLimit": "Up to RM2,000,000 per person per event",
+      "additionalPremium": 1.20
+    },
+    "lifestyleAndLivingBenefits": {
+      "plans": ["A", "B", "C", "D", "E"],
+      "additionalPremium": [47, 70, 94, 118, 141]
+    },
+    "studyInterruptionBenefit": {
+      "plans": ["A", "B", "C", "D", "E"],
+      "sumInsured": [10000, 20000, 30000, 40000, 50000],
+      "additionalPremium": [16, 32, 48, 64, 80]
+    }
+  }
+}

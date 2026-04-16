@@ -1,26 +1,80 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  /* Brand Colors */
+  --color-primary: #002356;
+  --color-secondary: #006398;
+  --color-tertiary: #002935;
+  --color-on-primary: #ffffff;
+  --color-on-primary-container: #80a4f4;
+  --color-primary-fixed: #d9e2ff;
+
+  /* Surface Hierarchy */
+  --color-surface: #f7f9fb;
+  --color-surface-lowest: #ffffff;
+  --color-surface-low: #f2f4f6;
+  --color-surface-mid: #eceef0;
+  --color-surface-high: #e6e9eb;
+  --color-surface-highest: #e0e3e5;
+
+  /* Accent */
+  --color-secondary-container: #65bafd;
+  --color-on-secondary-container: #004971;
+  --color-outline-variant: #c3c6d3;
+
+  /* On-surface */
+  --color-on-surface: #191c1e;
+  --color-on-surface-variant: #41484d;
+
+  /* Fonts */
+  --font-display: var(--font-jakarta);
+  --font-body: var(--font-manrope);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* Base */
+html {
+  scroll-behavior: smooth;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: #f7f9fb;
+  color: #191c1e;
+  font-family: var(--font-manrope), system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Ambient card shadow — formula: y-20, blur-40, rgba(25,28,30,0.06) */
+.shadow-ambient {
+  box-shadow: 0 20px 40px rgba(25, 28, 30, 0.06);
+}
+.shadow-ambient-md {
+  box-shadow: 0 12px 28px rgba(25, 28, 30, 0.08);
+}
+.shadow-ambient-lg {
+  box-shadow: 0 24px 56px rgba(25, 28, 30, 0.14);
+}
+
+/* Glassmorphism nav */
+.glass {
+  background: rgba(255, 255, 255, 0.72);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+
+/* Hero gradient: primary → primary_container deep */
+.hero-gradient {
+  background: linear-gradient(135deg, #002356 0%, #003a6e 55%, #002935 100%);
+}
+
+/* Plan card expand */
+.plan-benefits {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.4s ease;
+}
+.plan-benefits.open {
+  grid-template-rows: 1fr;
+}
+.plan-benefits > div {
+  overflow: hidden;
 }

@@ -6,7 +6,10 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "pages:build": "npx @cloudflare/next-on-pages@1",
+    "pages:deploy": "wrangler pages deploy",
+    "pages:dev": "wrangler pages dev"
   },
   "dependencies": {
     "next": "16.2.3",
@@ -14,6 +17,8 @@
     "react-dom": "19.2.4"
   },
   "devDependencies": {
+    "@cloudflare/next-on-pages": "^1",
+    "wrangler": "^3",
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
     "@types/react": "^19",
