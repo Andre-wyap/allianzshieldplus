@@ -1,3 +1,5 @@
+export const runtime = "edge";
+
 import ApplyClient from "./ApplyClient";
 
 type AgeBand = "under50" | "51to80";
