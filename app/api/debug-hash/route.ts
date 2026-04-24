@@ -1,7 +1,7 @@
 export const runtime = "edge";
 
 import { NextResponse } from "next/server";
-import { md5Hex } from "@/lib/md5";
+import { hmacSha256Hex } from "@/lib/hash";
 
 // Temporary debug endpoint — DELETE after confirming hash is correct
 export async function GET() {
@@ -14,7 +14,7 @@ export async function GET() {
   const orderId = "ASP-TEST-001";
 
   const hashInput = `${secretKey}${detail}${amount}${orderId}`;
-  const hash = md5Hex(hashInput);
+  const hash = await hmacSha256Hex(secretKey, hashInput);
 
   const params = new URLSearchParams({ detail, amount, order_id: orderId, hash });
   const paymentUrl = `${senangPayUrl}/${merchantId}?${params.toString()}`;

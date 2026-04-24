@@ -2,7 +2,7 @@ export const runtime = "edge";
 
 import { NextRequest, NextResponse } from "next/server";
 import plansData from "@/lib/plans.json";
-import { md5Hex } from "@/lib/md5";
+import { hmacSha256Hex } from "@/lib/hash";
 
 type AgeBand = "under50" | "51to80";
 type OccCategory = "A" | "B";
@@ -124,7 +124,7 @@ export async function POST(req: NextRequest) {
 
     // Hash formula: MD5(secretKey + "|" + detail + "|" + amount + "|" + order_id)
     // Senang Pay hash: MD5(secretKey + detail + amount + order_id) — no separators
-    const hash = md5Hex(`${secretKey}${detail}${amountStr}${orderId}`);
+    const hash = await hmacSha256Hex(secretKey, `${secretKey}${detail}${amountStr}${orderId}`);
 
     const params = new URLSearchParams({
       detail,

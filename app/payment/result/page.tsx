@@ -1,6 +1,6 @@
 export const runtime = "edge";
 
-import { md5Hex } from "@/lib/md5";
+import { hmacSha256Hex } from "@/lib/hash";
 
 // Payment result page — where Senang Pay redirects after payment.
 //
@@ -14,17 +14,16 @@ interface PageProps {
   searchParams: Promise<Record<string, string>>;
 }
 
-function verifyRedirectSignature(
+async function verifyRedirectSignature(
   secretKey: string,
   statusId: string,
   orderId: string,
   transactionId: string,
   msg: string,
   hash: string
-): boolean {
+): Promise<boolean> {
   if (!hash) return false;
-  // Senang Pay hash: MD5(secretKey + status_id + order_id + transaction_id + msg) — no separators
-  const computed = md5Hex(`${secretKey}${statusId}${orderId}${transactionId}${msg}`);
+  const computed = await hmacSha256Hex(secretKey, `${secretKey}${statusId}${orderId}${transactionId}${msg}`);
   return computed === hash;
 }
 
@@ -56,7 +55,7 @@ export default async function PaymentResultPage({ searchParams }: PageProps) {
   const signatureValid =
     !hasSenangPayParams ||
     !secretKey ||
-    verifyRedirectSignature(secretKey, statusId, orderId, transactionId, msg, hash);
+    (await verifyRedirectSignature(secretKey, statusId, orderId, transactionId, msg, hash));
 
   // If this page was accessed directly (no params), show a neutral message
   if (!hasSenangPayParams) {

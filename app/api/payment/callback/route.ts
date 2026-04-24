@@ -1,22 +1,21 @@
 export const runtime = "edge";
 
 import { NextRequest, NextResponse } from "next/server";
-import { md5Hex } from "@/lib/md5";
+import { hmacSha256Hex } from "@/lib/hash";
 
 // Senang Pay server-to-server callback (POST, form-encoded).
 // Fired when payment status changes.
 // Hash verification: MD5(secretKey + "|" + status_id + "|" + order_id + "|" + transaction_id + "|" + msg)
 
-function verifySignature(
+async function verifySignature(
   secretKey: string,
   statusId: string,
   orderId: string,
   transactionId: string,
   msg: string,
   hash: string
-): boolean {
-  // Senang Pay hash: MD5(secretKey + status_id + order_id + transaction_id + msg) — no separators
-  const computed = md5Hex(`${secretKey}${statusId}${orderId}${transactionId}${msg}`);
+): Promise<boolean> {
+  const computed = await hmacSha256Hex(secretKey, `${secretKey}${statusId}${orderId}${transactionId}${msg}`);
   return computed === hash;
 }
 
@@ -60,7 +59,7 @@ export async function POST(req: NextRequest) {
     // Verify signature when secret key is configured
     if (
       secretKey &&
-      !verifySignature(secretKey, status_id ?? "", order_id ?? "", transaction_id ?? "", msg ?? "", hash ?? "")
+      !(await verifySignature(secretKey, status_id ?? "", order_id ?? "", transaction_id ?? "", msg ?? "", hash ?? ""))
     ) {
       console.warn("Senang Pay callback: signature mismatch — ignoring.");
       return NextResponse.json({ error: "Invalid signature." }, { status: 400 });
