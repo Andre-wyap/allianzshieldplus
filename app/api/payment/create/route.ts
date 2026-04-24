@@ -2,6 +2,7 @@ export const runtime = "edge";
 
 import { NextRequest, NextResponse } from "next/server";
 import plansData from "@/lib/plans.json";
+import { md5Hex } from "@/lib/md5";
 
 type AgeBand = "under50" | "51to80";
 type OccCategory = "A" | "B";
@@ -31,11 +32,6 @@ function getPremium(planId: number, age: AgeBand, occ: OccCategory): number | nu
   const tier = plan.premiums.withoutWeeklyBenefit[key];
   if (!tier) return null;
   return age === "under50" ? tier.age50AndBelow : tier.age51To80;
-}
-
-function calcTotalSen(base: number): number {
-  const tax = Math.round(base * 0.08 * 100) / 100;
-  return Math.round((base + tax + 10) * 100);
 }
 
 function calcTotalRM(base: number): number {
@@ -68,22 +64,22 @@ async function notifyN8n(payload: object): Promise<void> {
 
 export async function POST(req: NextRequest) {
   try {
-    const apiKey = process.env.BILLPLZ_API_KEY;
-    const collectionId = process.env.BILLPLZ_COLLECTION_ID;
-    const apiUrl =
-      process.env.BILLPLZ_API_URL ?? "https://www.billplz-sandbox.com/api/v3";
+    const merchantId = process.env.SENANGPAY_MERCHANT_ID;
+    const secretKey = process.env.SENANGPAY_SECRET_KEY;
+    const senangPayUrl =
+      process.env.SENANGPAY_URL ?? "https://sandbox.senangpay.my/payment";
     const appUrl =
       process.env.NEXT_PUBLIC_APP_URL ?? "http://localhost:3004";
 
-    if (!apiKey) {
+    if (!merchantId) {
       return NextResponse.json(
-        { error: "Payment gateway not configured: missing API key." },
+        { error: "Payment gateway not configured: missing Merchant ID." },
         { status: 500 }
       );
     }
-    if (!collectionId) {
+    if (!secretKey) {
       return NextResponse.json(
-        { error: "Payment gateway not configured: missing Collection ID." },
+        { error: "Payment gateway not configured: missing Secret Key." },
         { status: 500 }
       );
     }
@@ -116,53 +112,34 @@ export async function POST(req: NextRequest) {
     }
 
     const isVoucherValid = voucherCode?.trim().toLowerCase() === "andrew";
-    const amountSen = isVoucherValid ? 100 : calcTotalSen(premium);
     const totalRM = isVoucherValid ? 1.0 : calcTotalRM(premium);
 
+    // Senang Pay expects amount as a string with 2 decimal places (e.g. "100.00")
+    const amountStr = totalRM.toFixed(2);
+
+    // Unique order ID for this transaction
+    const orderId = `ASP-${Date.now()}`;
+
+    const detail = `Allianz Shield Plus - ${plan.name}`;
+
+    // Hash formula: MD5(secretKey + "|" + detail + "|" + amount + "|" + order_id)
+    const hash = md5Hex(`${secretKey}|${detail}|${amountStr}|${orderId}`);
+
     const params = new URLSearchParams({
-      collection_id: collectionId,
-      email: applicant.email,
+      detail,
+      amount: amountStr,
+      order_id: orderId,
+      hash,
       name: applicant.name,
-      amount: String(amountSen),
-      description: `Allianz Shield Plus \u2013 ${plan.name}`,
-      callback_url: `${appUrl}/api/payment/callback`,
-      redirect_url: `${appUrl}/payment/result`,
-      reference_1_label: "NRIC",
-      reference_1: applicant.nric,
-      reference_2_label: "Plan",
-      reference_2: plan.name,
+      email: applicant.email,
+      return_url: `${appUrl}/payment/result`,
     });
 
-    // btoa replaces Buffer.from(...).toString("base64") — works on all runtimes
-    const billplzRes = await fetch(`${apiUrl}/bills`, {
-      method: "POST",
-      headers: {
-        Authorization: `Basic ${btoa(`${apiKey}:`)}`,
-        "Content-Type": "application/x-www-form-urlencoded",
-      },
-      body: params.toString(),
-    });
+    const paymentUrl = `${senangPayUrl}/${merchantId}?${params.toString()}`;
 
-    const data = await billplzRes.json();
-
-    if (!billplzRes.ok) {
-      console.error("Billplz error response:", JSON.stringify(data, null, 2));
-      const billplzMessage =
-        data?.error?.message ??
-        (typeof data?.error === "string" ? data.error : null) ??
-        JSON.stringify(data);
-      return NextResponse.json(
-        { error: `Billplz: ${billplzMessage}`, details: data },
-        { status: 502 }
-      );
-    }
-
-    // Forward full application to n8n at submission time.
-    // The callback will fire a second "payment_callback" event keyed by the
-    // same billId so n8n can correlate the two.
     await notifyN8n({
       event: "application_submitted",
-      billId: data.id,
+      orderId,
       submittedAt: new Date().toISOString(),
       plan: {
         id: planId,
@@ -191,7 +168,7 @@ export async function POST(req: NextRequest) {
       })),
     });
 
-    return NextResponse.json({ paymentUrl: data.url, billId: data.id });
+    return NextResponse.json({ paymentUrl, orderId });
   } catch (err) {
     console.error("Payment create error:", err);
     return NextResponse.json({ error: "Internal server error." }, { status: 500 });

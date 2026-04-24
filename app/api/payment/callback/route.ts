@@ -1,26 +1,22 @@
 export const runtime = "edge";
 
 import { NextRequest, NextResponse } from "next/server";
-import { hmacSha256Hex } from "@/lib/hmac";
+import { md5Hex } from "@/lib/md5";
 
-/**
- * Billplz server-to-server callback (POST, form-encoded).
- *
- * Billplz calls this URL when a bill's payment status changes.
- * Signature verification: sort all params except x_signature by key name,
- * join their values with "|", then HMAC-SHA256 with the X-Signature key.
- */
+// Senang Pay server-to-server callback (POST, form-encoded).
+// Fired when payment status changes.
+// Hash verification: MD5(secretKey + "|" + status_id + "|" + order_id + "|" + transaction_id + "|" + msg)
 
-async function verifySignature(
-  params: Record<string, string>,
-  signatureKey: string
-): Promise<boolean> {
-  const { x_signature, ...rest } = params;
-  if (!x_signature) return false;
-  const sorted = Object.keys(rest).sort();
-  const source = sorted.map((k) => rest[k]).join("|");
-  const computed = await hmacSha256Hex(signatureKey, source);
-  return computed === x_signature;
+function verifySignature(
+  secretKey: string,
+  statusId: string,
+  orderId: string,
+  transactionId: string,
+  msg: string,
+  hash: string
+): boolean {
+  const computed = md5Hex(`${secretKey}|${statusId}|${orderId}|${transactionId}|${msg}`);
+  return computed === hash;
 }
 
 async function forwardToN8n(payload: object): Promise<void> {
@@ -50,7 +46,7 @@ async function forwardToN8n(payload: object): Promise<void> {
 
 export async function POST(req: NextRequest) {
   try {
-    const signatureKey = process.env.BILLPLZ_X_SIGNATURE_KEY ?? "";
+    const secretKey = process.env.SENANGPAY_SECRET_KEY ?? "";
 
     const formData = await req.formData();
     const params: Record<string, string> = {};
@@ -58,34 +54,37 @@ export async function POST(req: NextRequest) {
       params[key] = String(value);
     });
 
-    // Verify signature when key is configured
-    if (signatureKey && !(await verifySignature(params, signatureKey))) {
-      console.warn("Billplz callback: signature mismatch — ignoring.");
+    const { status_id, order_id, transaction_id, msg, hash } = params;
+
+    // Verify signature when secret key is configured
+    if (
+      secretKey &&
+      !verifySignature(secretKey, status_id ?? "", order_id ?? "", transaction_id ?? "", msg ?? "", hash ?? "")
+    ) {
+      console.warn("Senang Pay callback: signature mismatch — ignoring.");
       return NextResponse.json({ error: "Invalid signature." }, { status: 400 });
     }
 
-    const { id, paid, paid_at, amount, transaction_id, transaction_status } = params;
+    // status_id: "1" = success, "0" = failed, "2" = pending
+    const paid = status_id === "1";
 
-    console.log("Billplz callback received:", {
-      billId: id,
+    console.log("Senang Pay callback received:", {
+      orderId: order_id,
+      statusId: status_id,
       paid,
-      paid_at,
-      amount,
-      transaction_id,
-      transaction_status,
+      transactionId: transaction_id,
+      msg,
     });
 
-    // Forward payment result to n8n. The "application_submitted" event
-    // (fired from /api/payment/create) carries the full applicant data;
-    // n8n correlates both events by billId.
+    // n8n correlates this "payment_callback" event with the earlier
+    // "application_submitted" event by matching orderId.
     await forwardToN8n({
       event: "payment_callback",
-      billId: id,
-      paid: paid === "true",
-      paidAt: paid_at ?? null,
-      amountSen: amount ? parseInt(amount, 10) : null,
+      orderId: order_id ?? null,
+      paid,
+      statusId: status_id ?? null,
       transactionId: transaction_id ?? null,
-      transactionStatus: transaction_status ?? null,
+      msg: msg ?? null,
     });
 
     return NextResponse.json({ received: true });

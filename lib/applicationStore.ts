@@ -1,8 +1,8 @@
 /**
- * Temporary in-memory store for application data keyed by Billplz bill ID.
+ * Temporary in-memory store for application data keyed by Senang Pay order ID.
  *
- * After the bill is created we stash the full application here so that when
- * Billplz fires the server-to-server callback (which only carries the bill
+ * After initiating payment we stash the full application here so that when
+ * Senang Pay fires the server-to-server callback (which only carries order
  * fields), we can retrieve the complete applicant + plan + nominee data and
  * forward it to n8n.
  *
@@ -20,7 +20,7 @@ export interface NomineeRecord {
 }
 
 export interface ApplicationRecord {
-  billId: string;
+  orderId: string;
   createdAt: string; // ISO timestamp
 
   // Plan
@@ -52,13 +52,13 @@ export interface ApplicationRecord {
 const store = new Map<string, ApplicationRecord>();
 
 export function storeApplication(record: ApplicationRecord): void {
-  store.set(record.billId, record);
+  store.set(record.orderId, record);
 }
 
-export function getApplication(billId: string): ApplicationRecord | undefined {
-  return store.get(billId);
+export function getApplication(orderId: string): ApplicationRecord | undefined {
+  return store.get(orderId);
 }
 
-export function deleteApplication(billId: string): void {
-  store.delete(billId);
+export function deleteApplication(orderId: string): void {
+  store.delete(orderId);
 }

@@ -1,36 +1,30 @@
 export const runtime = "edge";
 
-import { hmacSha256Hex } from "@/lib/hmac";
+import { md5Hex } from "@/lib/md5";
 
-/**
- * Payment result page — where Billplz redirects after payment.
- *
- * Billplz appends query params in the form:
- *   ?billplz[id]=xxx&billplz[paid]=true&billplz[paid_at]=...
- *   &billplz[transaction_id]=xxx&billplz[transaction_status]=completed
- *   &billplz[x_signature]=yyy
- */
+// Payment result page — where Senang Pay redirects after payment.
+//
+// Senang Pay appends query params:
+//   ?status_id=1&order_id=ASP-xxx&transaction_id=xxx&msg=xxx&hash=xxx
+//
+// status_id: "1" = success, "0" = failed, "2" = pending
+// Hash verification: MD5(secretKey + "|" + status_id + "|" + order_id + "|" + transaction_id + "|" + msg)
 
 interface PageProps {
   searchParams: Promise<Record<string, string>>;
 }
 
-async function verifyRedirectSignature(
-  params: Record<string, string>,
-  signatureKey: string
-): Promise<boolean> {
-  const sig = params["billplz[x_signature]"];
-  if (!sig) return false;
-
-  // All billplz params except x_signature, sorted by key
-  const relevant: Record<string, string> = {};
-  for (const [k, v] of Object.entries(params)) {
-    if (k !== "billplz[x_signature]") relevant[k] = v;
-  }
-  const sorted = Object.keys(relevant).sort();
-  const source = sorted.map((k) => relevant[k]).join("|");
-  const computed = await hmacSha256Hex(signatureKey, source);
-  return computed === sig;
+function verifyRedirectSignature(
+  secretKey: string,
+  statusId: string,
+  orderId: string,
+  transactionId: string,
+  msg: string,
+  hash: string
+): boolean {
+  if (!hash) return false;
+  const computed = md5Hex(`${secretKey}|${statusId}|${orderId}|${transactionId}|${msg}`);
+  return computed === hash;
 }
 
 function formatDate(iso: string): string {
@@ -48,20 +42,23 @@ function formatDate(iso: string): string {
 export default async function PaymentResultPage({ searchParams }: PageProps) {
   const params = await searchParams;
 
-  const billId = params["billplz[id]"] ?? "";
-  const paid = params["billplz[paid]"] === "true";
-  const paidAt = params["billplz[paid_at]"] ?? "";
-  const hasBillplzParams = Boolean(billId);
+  const statusId = params["status_id"] ?? "";
+  const orderId = params["order_id"] ?? "";
+  const transactionId = params["transaction_id"] ?? "";
+  const msg = params["msg"] ?? "";
+  const hash = params["hash"] ?? "";
 
-  // Verify signature if key is configured and we have billplz params
-  const signatureKey = process.env.BILLPLZ_X_SIGNATURE_KEY ?? "";
+  const hasSenangPayParams = Boolean(orderId);
+
+  // Verify signature if secret key is configured
+  const secretKey = process.env.SENANGPAY_SECRET_KEY ?? "";
   const signatureValid =
-    !hasBillplzParams ||
-    !signatureKey ||
-    (await verifyRedirectSignature(params, signatureKey));
+    !hasSenangPayParams ||
+    !secretKey ||
+    verifyRedirectSignature(secretKey, statusId, orderId, transactionId, msg, hash);
 
-  // If this page was accessed directly (no params), redirect home
-  if (!hasBillplzParams) {
+  // If this page was accessed directly (no params), show a neutral message
+  if (!hasSenangPayParams) {
     return (
       <div className="min-h-screen bg-[#f7f9fb] flex items-center justify-center px-6">
         <div className="bg-white rounded-2xl shadow-ambient p-10 max-w-md w-full text-center">
@@ -111,6 +108,8 @@ export default async function PaymentResultPage({ searchParams }: PageProps) {
     );
   }
 
+  const paid = statusId === "1";
+
   if (paid) {
     return (
       <ResultLayout>
@@ -132,15 +131,15 @@ export default async function PaymentResultPage({ searchParams }: PageProps) {
 
         {/* Receipt card */}
         <div className="w-full bg-[#f7f9fb] rounded-xl p-5 mb-8 space-y-3 text-left">
-          <Row label="Bill Reference" value={billId} />
-          {paidAt && <Row label="Paid At" value={formatDate(paidAt)} />}
+          <Row label="Order Reference" value={orderId} />
+          {transactionId && <Row label="Transaction ID" value={transactionId} />}
         </div>
 
         <p
           className="text-xs text-[#9aa0a6] mb-6"
           style={{ fontFamily: "var(--font-manrope)" }}
         >
-          Keep your bill reference for future correspondence.
+          Keep your order reference for future correspondence.
         </p>
 
         <a
@@ -154,7 +153,7 @@ export default async function PaymentResultPage({ searchParams }: PageProps) {
     );
   }
 
-  // Payment not completed / cancelled
+  // Payment not completed / cancelled / failed
   return (
     <ResultLayout>
       <IconBadge type="failed" />
@@ -172,21 +171,19 @@ export default async function PaymentResultPage({ searchParams }: PageProps) {
         again or use a different payment method.
       </p>
 
-      {billId && (
+      {orderId && (
         <div className="w-full bg-[#f7f9fb] rounded-xl p-5 mb-8 text-left">
-          <Row label="Bill Reference" value={billId} />
+          <Row label="Order Reference" value={orderId} />
         </div>
       )}
 
       <div className="flex flex-col sm:flex-row gap-3">
         <a
-          href={`https://www.billplz.com/bills/${billId}`}
-          target="_blank"
-          rel="noopener noreferrer"
+          href="/apply"
           className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full bg-[#002356] text-white text-sm font-semibold hover:bg-[#003a6e] transition-colors"
           style={{ fontFamily: "var(--font-manrope)" }}
         >
-          Retry Payment
+          Try Again
           <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
             <path
               d="M2 7h10M8 3l4 4-4 4"
