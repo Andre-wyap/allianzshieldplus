@@ -132,7 +132,6 @@ export async function POST(req: NextRequest) {
       hash,
       name: applicant.name,
       email: applicant.email,
-      return_url: `${appUrl}/payment/result`,
     });
 
     const paymentUrl = `${senangPayUrl}/${merchantId}?${params.toString()}`;
