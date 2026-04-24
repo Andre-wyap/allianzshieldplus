@@ -123,7 +123,8 @@ export async function POST(req: NextRequest) {
     const detail = `Allianz Shield Plus - ${plan.name}`;
 
     // Hash formula: MD5(secretKey + "|" + detail + "|" + amount + "|" + order_id)
-    const hash = md5Hex(`${secretKey}|${detail}|${amountStr}|${orderId}`);
+    // Senang Pay hash: MD5(secretKey + detail + amount + order_id) — no separators
+    const hash = md5Hex(`${secretKey}${detail}${amountStr}${orderId}`);
 
     const params = new URLSearchParams({
       detail,

@@ -15,7 +15,8 @@ function verifySignature(
   msg: string,
   hash: string
 ): boolean {
-  const computed = md5Hex(`${secretKey}|${statusId}|${orderId}|${transactionId}|${msg}`);
+  // Senang Pay hash: MD5(secretKey + status_id + order_id + transaction_id + msg) — no separators
+  const computed = md5Hex(`${secretKey}${statusId}${orderId}${transactionId}${msg}`);
   return computed === hash;
 }
 
