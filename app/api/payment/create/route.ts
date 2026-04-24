@@ -112,7 +112,7 @@ export async function POST(req: NextRequest) {
     }
 
     const isVoucherValid = voucherCode?.trim().toLowerCase() === "andrew";
-    const totalRM = isVoucherValid ? 1.0 : calcTotalRM(premium);
+    const totalRM = isVoucherValid ? 10.0 : calcTotalRM(premium);
 
     // Senang Pay expects amount as a string with 2 decimal places (e.g. "100.00")
     const amountStr = totalRM.toFixed(2);
